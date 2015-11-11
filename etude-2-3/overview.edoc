@@ -1,0 +1,7 @@
+** This is the overview file for the geom application **
+
+@author Gabriel Nicolas Avellaneda <avellaneda.gabriel@gmail.com>
+@copyright 2015
+@version 0.1
+@title Welcome to the <em>geom</em> application!
+@doc <em>geom</em> is a simple application for calculating areas of shapes.
