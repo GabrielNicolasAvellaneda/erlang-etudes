@@ -11,7 +11,7 @@
 -include_lib("eunit/include/eunit.hrl").
 
 -spec(area(atom(), number(), number()) -> number()).
--spec(area(tuple()) -> number()).
+-spec(area({atom(), number(), number()}) -> number()).
 
 %% @doc Function to calculate the area of a rectangle, triangle or ellipse
 area({Shape, A, B}) ->
