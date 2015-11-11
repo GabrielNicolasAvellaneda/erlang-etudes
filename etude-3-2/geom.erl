@@ -19,23 +19,16 @@ area(triangle, A, B) when A > 0, B > 0 -> A * B / 2.0;
 area(ellipse, A, B) when A > 0, B > 0 -> math:pi() * A * B.
 
 negative_dimensions_should_throw_exception_test() ->
-	try
-		area(square, -1, -1),
-		throw(should_throw_match_exception)
-	catch
-		error:function_clause -> ok
-	end.
+	?assertError(function_clause, area(square, -1, -1)),
+	?assertError(function_clause, area(rectangle, 0, 1)),
+	?assertError(function_clause, area(triangle, -1, -2)),
+	?assertError(function_clause, area(ellipse, -3, -2)).
 
 square_area_test() ->
 	4 = area(square, 2, 2).
 
 square_area_bad_params_test() ->
-	try
-		area(square, 3, 4),
-		throw(should_throw_function_clause_exception)
-	catch
-		error:function_clause -> ok
-	end.
+	?assertError(function_clause, area(square, 3, 4)).
 
 rectangle_area_test() ->
 	?assert(area(rectangle, 2, 4) =:= 8).
