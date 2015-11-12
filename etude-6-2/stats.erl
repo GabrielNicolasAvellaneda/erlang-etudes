@@ -1,5 +1,5 @@
 -module(stats).
--export([minimum/1,minimum2/1,maximum/1,range/1]).
+-export([minimum/1,minimum2/1,maximum/1,range/1,range2/1,min/2,max/2]).
 
 -include_lib("eunit/include/eunit.hrl").
 
@@ -42,6 +42,31 @@ maximum([], Result) -> Result.
 range(List) ->
 		[minimum(List), maximum(List)].
 
+-spec(range2(list(number())) -> [number()]).
+
+-spec(max(number(), number()) -> number()).
+max(A, B) ->
+	if
+		A > B  -> A;
+		true -> B
+	end.
+
+-spec(min(number(), number()) -> number()).
+min(A, B) ->
+	if
+		A < B -> A;
+		true -> B
+	end.
+
+%% @doc range2 returns the minimum and maximum value from a list of number as a list in a single pass.
+range2([H|Tail]) ->
+		range2(Tail, H, H).
+
+range2([H|Tail], Minimum, Maximum) ->
+		range2(Tail, stats:min(H,Minimum), stats:max(H, Maximum));
+range2([], Minimum, Maximum) ->
+		[Minimum, Maximum].
+
 minimum_test() ->
 		?assert(minimum([2,5,1,3,8]) =:= 1),
 		?assert(minimum([11]) =:= 11).
@@ -58,3 +83,6 @@ range_test() ->
 		?assert(range([2]) =:= [2,2]),
 		?assert(range([4,6,1,7,-2,8,-17]) =:= [-17,8]).
 
+range2_test() ->
+		?assert(range2([5,6,7,8,9,-10,-50,-100]) =:= [-100,9]),
+		?assert(range2([4]) =:= [4,4]).
