@@ -18,15 +18,13 @@ julian(DateString) ->
 		[Y,M,D] = date_parts(DateString),
 		julian(Y, M, D, DaysPerMonth, 0).
 -spec(julian(integer(), integer(), integer(), [integer()], integer()) -> integer()).
-julian(Y, M, D, [H|Tail], Accumulator) ->
-		case (12 - length(Tail) + 1) < M of
-			true -> julian(Y, M, D, Tail, H + Accumulator);
-			false -> julian(Y, M, D, [], H + Accumulator + D)
-		end;
-julian(Y, _M, _D, [], Accumulator) ->
+julian(Y, M, D, Monthlist, Accumulator) when (13 - length(Monthlist)) < M ->
+		[H|Tail] = Monthlist,
+		julian(Y, M, D, Tail, H + Accumulator);
+julian(Y, M, D, _Monthlist, Accumulator) ->
 		case M > 2 andalso is_leap_year(Y) of
-			true -> Accumulator + 1;
-			false -> Accumulator
+			true -> Accumulator + D + 1;
+			false -> Accumulator + D
 		end.
 
 date_parts_test() ->
