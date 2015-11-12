@@ -1,5 +1,5 @@
 -module(stats).
--export([minimum/1,minimum2/1,maximum/1]).
+-export([minimum/1,minimum2/1,maximum/1,range/1]).
 
 -include_lib("eunit/include/eunit.hrl").
 
@@ -28,7 +28,6 @@ minimum([H|[]])	->
 		H.
 
 -spec(maximum(list(number())) -> number()).
-
 maximum([H|Tail]) ->
 		maximum(Tail, H).
 
@@ -38,6 +37,10 @@ maximum([H|Tail], Result) ->
 			false -> maximum(Tail, Result)
 		end;
 maximum([], Result) -> Result.
+
+-spec(range(list(number())) -> [number()]).
+range(List) ->
+		[minimum(List), maximum(List)].
 
 minimum_test() ->
 		?assert(minimum([2,5,1,3,8]) =:= 1),
@@ -50,4 +53,8 @@ minimum2_test() ->
 maximum_test() ->
 		?assert(maximum([3,4,5,1,8,14,0]) =:= 14),
 		?assert(maximum([2]) =:= 2).
+
+range_test() ->
+		?assert(range([2]) =:= [2,2]),
+		?assert(range([4,6,1,7,-2,8,-17]) =:= [-17,8]).
 
