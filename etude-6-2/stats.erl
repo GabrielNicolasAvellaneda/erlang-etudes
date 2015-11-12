@@ -58,6 +58,31 @@ min(A, B) ->
 		true -> B
 	end.
 
+max_predicate(A, B) -> A > B.
+min_predicate(A, B) -> 
+	not max_predicate(A, B).
+
+%% @doc an abstraction that needs a name. It's a binary bifurcation. 
+when_predicate(Predicate, True, False) ->
+	case Predicate() of
+		true -> True;
+		false -> False
+	end.
+
+max2(A, B) ->
+		when_predicate(fun () -> max_predicate(A, B) end, A, B).
+
+min2(A, B) ->
+		when_predicate(fun() -> min_predicate(A, B) end, A, B).
+
+-spec(range3(list(number())) -> [number()]).
+range3([H|Tail]) ->
+		range3(Tail, H, H).
+range3([H|Tail], Minimum, Maximum) ->
+		range3(Tail, min2(H, Minimum), max2(H, Maximum));
+range3([], Minimum, Maximum) ->
+		[Minimum, Maximum].
+
 %% @doc range2 returns the minimum and maximum value from a list of number as a list in a single pass.
 range2([H|Tail]) ->
 		range2(Tail, H, H).
@@ -86,3 +111,8 @@ range_test() ->
 range2_test() ->
 		?assert(range2([5,6,7,8,9,-10,-50,-100]) =:= [-100,9]),
 		?assert(range2([4]) =:= [4,4]).
+
+range3_test() ->
+		?assert(range3([5,28,3,1,7,4,3,-3]) =:= [-3, 28]),
+		?assert(range3([5]) =:= [5,5]).
+
