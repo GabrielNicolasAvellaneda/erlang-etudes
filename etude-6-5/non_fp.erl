@@ -28,9 +28,9 @@ generate_tooth(BaseDepth, Left, Result) ->
 -spec(generate_teeth(string(), number(), list()) -> list()).
 generate_teeth([], _Probability, Result) ->
 		lists:reverse(Result);
-generate_teeth([H|Tail], Probability, Result) when H == $F ->
+generate_teeth([$F|Tail], Probability, Result) ->
 		generate_teeth(Tail, Probability, [[0] | Result]);
-generate_teeth([H|Tail], Probability, Result) when H == $T ->
+generate_teeth([$T|Tail], Probability, Result) ->
 		generate_teeth(Tail, Probability, [generate_tooth(Probability) | Result]).
 
 generate_teeth_test() ->
