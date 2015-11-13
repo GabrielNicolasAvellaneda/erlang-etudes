@@ -10,4 +10,6 @@ derivative(Fun, X) ->
 	(Fun(X + Delta) - Fun(X))/Delta.
 
 derivative_test() ->
-	?assert(derivative(fun (X) -> X end, 0) =:= 1.0).
+	?assert(derivative(fun (X) -> 2*X end, 0) =:= 2.0),
+	?assert(derivative(fun math:sin/1, 0) =:= 1.0).
+		
