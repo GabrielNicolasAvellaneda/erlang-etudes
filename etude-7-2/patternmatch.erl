@@ -3,10 +3,11 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
-
+-spec names_of_males_over_40([tuple()]) -> [string()].
 names_of_males_over_40(People) ->
 	[Name || {Name, Gender, Age} <- People, Gender =:= $M, Age >= 40].
 
+-spec names_of_males_or_over_40(list(tuple())) -> list(string()).
 names_of_males_or_over_40(People) ->
 	[Name || {Name, Gender, Age} <- People, (Gender =:= $M) orelse (Age > 40)].
 
