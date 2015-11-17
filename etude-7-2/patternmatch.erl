@@ -8,7 +8,7 @@ names_of_males_over_40(People) ->
 	[Name || {Name, Gender, Age} <- People, Gender =:= $M, Age >= 40].
 
 names_of_males_or_over_40(People) ->
-	[Name || {Name, Gender, Age} <- People, (Gender =:= $M) or (Age > 40)].
+	[Name || {Name, Gender, Age} <- People, (Gender =:= $M) orelse (Age > 40)].
 
 names_of_males_over_40_test() ->
 	People = [{"Federico", $M, 22}, {"Kim", $F, 45}, {"Hansa", $F, 30},
